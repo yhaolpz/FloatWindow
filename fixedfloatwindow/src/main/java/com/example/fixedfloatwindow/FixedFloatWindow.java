@@ -1,6 +1,7 @@
 package com.example.fixedfloatwindow;
 
 import android.content.Context;
+import android.os.Build;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +35,7 @@ public class FixedFloatWindow implements FixedFloatView {
      * @param autoReqPermission  true将在内部自动请求权限；false需要用户自己申请权限，默认true
      */
     public FixedFloatWindow(Context applicationContext, boolean autoReqPermission) {
-        //        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-        if (true) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             mFixedFloatView = new FixedFloatPhone(applicationContext, autoReqPermission);
         } else {
             mFixedFloatView = new FixedFloatToast(applicationContext);
