@@ -60,4 +60,4 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 效果：
 ===
 
-![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/SlideAdapter/master/img.jpg)
+![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/img.jpg)
