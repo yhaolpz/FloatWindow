@@ -22,8 +22,8 @@ class FixedFloatToast implements FixedFloatView {
     private Method show;
     private Method hide;
 
-    private int mWidth = FixedFloatWindow.WRAP_CONTENT;
-    private int mHeight = FixedFloatWindow.WRAP_CONTENT;
+    private int mWidth;
+    private int mHeight;
 
 
     public FixedFloatToast(Context applicationContext) {
@@ -58,7 +58,7 @@ class FixedFloatToast implements FixedFloatView {
     }
 
 
-    public void hide() {
+    public void dismiss() {
         try {
             hide.invoke(mTN);
         } catch (Exception e) {

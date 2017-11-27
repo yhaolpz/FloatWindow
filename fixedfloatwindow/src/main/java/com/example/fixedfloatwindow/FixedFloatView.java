@@ -4,6 +4,7 @@ import android.view.View;
 
 /**
  * Created by yhao on 17-11-14.
+ *
  */
 
 interface FixedFloatView {
@@ -33,8 +34,11 @@ interface FixedFloatView {
     void show();
 
 
+
     /**
-     * 隐藏悬浮控件
+     * 销毁悬浮控件
      */
-    void hide();
+    void dismiss();
+
+
 }

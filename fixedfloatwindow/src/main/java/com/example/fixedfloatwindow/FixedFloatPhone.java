@@ -14,8 +14,8 @@ class FixedFloatPhone implements FixedFloatView {
 
     private final Context mContext;
 
-    private int mWidth = FixedFloatWindow.WRAP_CONTENT;
-    private int mHeight = FixedFloatWindow.WRAP_CONTENT;
+    private int mWidth;
+    private int mHeight;
 
     private final WindowManager mWindowManager;
     private final WindowManager.LayoutParams mLayoutParams;
@@ -81,14 +81,14 @@ class FixedFloatPhone implements FixedFloatView {
                 Intent intent = new Intent(mContext, FixedFloatActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-            }else{
+            } else {
                 throw new IllegalArgumentException("请将 FixedFloatWindow 设置为自动申请权限，或自行申请权限！");
             }
         }
     }
 
     @Override
-    public void hide() {
+    public void dismiss() {
         mWindowManager.removeView(mView);
     }
 }

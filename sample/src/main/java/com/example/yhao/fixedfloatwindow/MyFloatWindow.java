@@ -76,9 +76,6 @@ public class MyFloatWindow implements Application.ActivityLifecycleCallbacks {
         mFixedFloatWindow = new FixedFloatWindow(mAppContext);
         mFixedFloatWindow.setView(mView,120,120);
         mFixedFloatWindow.setGravity(Gravity.RIGHT | Gravity.TOP, 60, 60);
-        mFixedFloatWindow.show();
-
-
     }
 
 
@@ -86,7 +83,8 @@ public class MyFloatWindow implements Application.ActivityLifecycleCallbacks {
      * 显示悬浮窗
      */
     public void show() {
-        mView.setVisibility(View.VISIBLE);
+        mFixedFloatWindow.show();
+
     }
 
 
@@ -94,17 +92,15 @@ public class MyFloatWindow implements Application.ActivityLifecycleCallbacks {
      * 隐藏悬浮窗
      */
     public void hide() {
-        mView.setVisibility(View.INVISIBLE);
+        mFixedFloatWindow.hide();
     }
 
 
     /**
-     * FixedFloatWindow 的 hide 方法调用后不可再 show 显示出来
-     * 实际上 hide 方法名不严谨，应该是 dismiss 的意思 ，查看源码就明白了
-     * 若无意专门销毁悬浮窗，一般不需要调用此方法
+     * 调用后不可再 show 显示出来
      */
     public void dismiss() {
-        mFixedFloatWindow.hide();
+        mFixedFloatWindow.dismiss();
     }
 
 

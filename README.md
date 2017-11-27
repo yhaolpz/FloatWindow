@@ -17,6 +17,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 6.位置不可变、Andorid 4.4 以下无法接收触摸事件
 
+7.可灵活选择其他方案，如：所有版本都申请权限 等
 
 集成：
 ===
@@ -35,7 +36,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.2'
+	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.3'
 	}
 ```
 
@@ -44,23 +45,31 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-    Button button = new Button(getApplicationContext());
-    button.setText("悬浮按钮");
-    button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-
-
     FixedFloatWindow fixedFloatWindow = new FixedFloatWindow(getApplicationContext());
-    fixedFloatWindow.setView(button);
+    fixedFloatWindow.setView(view);
     fixedFloatWindow.setGravity(Gravity.RIGHT | Gravity.TOP, 100, 150);
+
     fixedFloatWindow.show();
 //   fixedFloatWindow.hide();
+//   fixedFloatWindow.dismiss();
 ```
-
 
 效果：
 ===
 
-![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/img.jpg)
+![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/img.gif)
+
+
+如果要选择其他方案，比如所有版本都申请权限，且在内部自动申请，只需在实例化时选择对应类型即可：
+
+```java
+
+    FixedFloatWindow fixedFloatWindow = new FixedFloatWindow(
+             getApplicationContext(), FixedFloatWindow.ALL_AUTO_REQ );
+
+```
+
+共提供 5 种方案供大家测试、使用，其他方案见 FixedFloatWindow ，注释很详细。
 
 
 
@@ -100,7 +109,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
     7.0 以下采用自定义 toast, 7.1及以上申请权限
 
-本库即基于此方案。
+本库中默认方式即为此最终选择方案。
 
 
 
