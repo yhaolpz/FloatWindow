@@ -10,12 +10,14 @@ import android.view.WindowManager;
  * 7.1及以上需申请权限
  */
 
-class FixedFloatPhone implements FixedFloatView {
+class FFPhone implements FixedFloatView {
 
     private final Context mContext;
 
     private int mWidth;
     private int mHeight;
+
+    private int mAnim;
 
     private final WindowManager mWindowManager;
     private final WindowManager.LayoutParams mLayoutParams;
@@ -24,7 +26,7 @@ class FixedFloatPhone implements FixedFloatView {
     private boolean mAutoReqPermission;
 
 
-    public FixedFloatPhone(Context applicationContext, boolean autoReqPermission) {
+    FFPhone(Context applicationContext, boolean autoReqPermission) {
         mContext = applicationContext;
         mAutoReqPermission = autoReqPermission;
         mWindowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
@@ -46,6 +48,7 @@ class FixedFloatPhone implements FixedFloatView {
         mLayoutParams.width = mWidth;
         mLayoutParams.height = mHeight;
         mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        mLayoutParams.windowAnimations = mAnim;
         mView = view;
     }
 
@@ -56,13 +59,14 @@ class FixedFloatPhone implements FixedFloatView {
         mLayoutParams.y = yOffset;
     }
 
+
     @Override
     public void show() {
         if (FFWindow.hasPermission(mContext)) {
             mWindowManager.addView(mView, mLayoutParams);
         } else {
             if (mAutoReqPermission) {
-                FixedFloatActivity.setPermissionListener(new PermissionListener() {
+                FFActivity.setPermissionListener(new PermissionListener() {
                     @Override
                     public void onSuccess() {
                         mWindowManager.addView(mView, mLayoutParams);
@@ -78,7 +82,7 @@ class FixedFloatPhone implements FixedFloatView {
                         }
                     }
                 });
-                Intent intent = new Intent(mContext, FixedFloatActivity.class);
+                Intent intent = new Intent(mContext, FFActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             } else {

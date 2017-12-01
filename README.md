@@ -5,19 +5,16 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 特性：
 ===
 
-1.可在应用内任意界面及桌面显示
+1.安卓 7.1 以下绕过权限申请；7.1 也不需要手动申请，本库内部自动进行。
 
-2.Andorid 7.1 版本以下无需申请权限
+2.支持设置 Activity 过滤器，自由指定哪些界面显示，哪些界面屏蔽
 
-3.适配各大国产机型
+3.应用退到后台会自动隐藏，无需再次封装，自动控制于应用内显示
 
-4.内部封装权限申请操作
+3.提供其他悬浮窗实现方案，可灵活修改
 
-5.简易、轻量
+6.悬浮窗位置不能改变；安卓 4.4 以下无法接收触摸事件
 
-6.位置不可变、Andorid 4.4 以下无法接收触摸事件
-
-7.可灵活选择其他方案，如：所有版本都申请权限 等
 
 集成：
 ===
@@ -36,7 +33,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.3'
+	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.4'
 	}
 ```
 
@@ -45,13 +42,19 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-    FixedFloatWindow FFWindow = new FixedFloatWindow(getApplicationContext());
-    FFWindow.setView(view);
-    FFWindow.setGravity(Gravity.RIGHT | Gravity.TOP, 100, 150);
+        Button button = new Button(getApplicationContext());
+        button.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+        button.setText(" 悬浮按钮 ");
 
-    FFWindow.show();
-//   FFWindow.hide();
-//   FFWindow.dismiss();
+        FFWindow ffWindow = new FFWindow(getApplicationContext())
+                .setView(button)
+                .setGravity(Gravity.END | Gravity.TOP, 100, 100)
+                .setFilter(FilterType.SHOW, A_Activity.class, C_Activity.class)
+                .show();
+
+//        ffWindow.hide();
+//        ffWindow.dismiss();
+
 ```
 
 效果：
@@ -60,17 +63,48 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 ![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/img.gif)
 
 
+**1.配置 Activity 过滤器**
+
+```java
+
+      setFilter(FilterType.SHOW, A_Activity.class, C_Activity.class)
+
+```
+此方法表示 A_Activity、C_Activity 显示悬浮窗，其他界面屏蔽。
+
+
+```java
+
+      setFilter(FilterType.NOT_SHOW, B_Activity.class)
+
+```
+此方法表示 B_Activity 屏蔽悬浮窗，其他界面显示。
+
+注意：setFilter 方法参数可以识别该 Activity 的子类
+
+也就是说，如果 A_Activity、C_Activity 继承自 BaseActivity，你可以这样设置：
+
+```java
+
+      setFilter(FilterType.NOT_SHOW, BaseActivity.class)
+
+```
+
+**2.配置其他方案**
+
+默认方案为：安卓 7.1 版本以下采用自定义 toast 方式跳过申请权限，7.1 及采用申请权限(TYPE_PHONE)方式，权限申请操作无需用户处理，内部会自动申请。
+
+
 如果要选择其他方案，比如所有版本都申请权限，且在内部自动申请，只需在实例化时选择对应类型即可：
 
 ```java
 
-    FixedFloatWindow FFWindow = new FixedFloatWindow(
-             getApplicationContext(), FixedFloatWindow.ALL_AUTO_REQ );
+    FFWindow ffWindow = new FFWindow(
+             getApplicationContext(), ReqType.ALL_AUTO_REQ );
 
 ```
 
 共提供 5 种方案供大家测试、使用:
-
 
 
     1. AUTO_REQ :  默认类型，7.1 以下采用自定义 toast 方式跳过申请权限，7.1 及以上内部自动申请权限 ， 推荐

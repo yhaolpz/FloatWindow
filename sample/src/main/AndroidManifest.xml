@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".B_Activity" />
         <activity android:name=".C_Activity" />
-        <activity android:name=".D_Activity"></activity>
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

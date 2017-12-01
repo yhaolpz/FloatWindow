@@ -9,11 +9,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * 自定义 toast
- * 4.4~7.0 无需权限可点击
+ * 自定义 toast 方式，无需申请权限
  */
 
-class FixedFloatToast implements FixedFloatView {
+class FFToast implements FixedFloatView {
 
 
     private Toast toast;
@@ -25,8 +24,9 @@ class FixedFloatToast implements FixedFloatView {
     private int mWidth;
     private int mHeight;
 
+    private int mAnim;
 
-    public FixedFloatToast(Context applicationContext) {
+    FFToast(Context applicationContext) {
         toast = new Toast(applicationContext);
     }
 
@@ -85,6 +85,7 @@ class FixedFloatToast implements FixedFloatView {
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
             params.width = mWidth;
             params.height = mHeight;
+            params.windowAnimations = mAnim;
             Field tnNextViewField = mTN.getClass().getDeclaredField("mNextView");
             tnNextViewField.setAccessible(true);
             tnNextViewField.set(mTN, toast.getView());

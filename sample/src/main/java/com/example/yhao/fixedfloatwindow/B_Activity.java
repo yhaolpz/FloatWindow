@@ -2,10 +2,9 @@ package com.example.yhao.fixedfloatwindow;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-public class B_Activity extends D_Activity {
+public class B_Activity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

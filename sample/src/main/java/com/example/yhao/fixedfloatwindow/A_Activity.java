@@ -25,11 +25,14 @@ public class A_Activity extends AppCompatActivity {
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
         button.setText(" 悬浮按钮 ");
 
-        FFWindow fFWindow = new FFWindow(getApplicationContext());
-        fFWindow.setView(button);
-        fFWindow.setGravity(Gravity.END | Gravity.TOP, 100, 100);
-        fFWindow.setFilter(FilterType.SHOW, A_Activity.class, D_Activity.class);
-        fFWindow.show();
+        FFWindow fFWindow = new FFWindow(getApplicationContext())
+                .setView(button)
+                .setGravity(Gravity.END | Gravity.TOP, 100, 100)
+                .setFilter(FilterType.SHOW, A_Activity.class, C_Activity.class)
+                .show();
+
+//        fFWindow.hide();
+//        fFWindow.dismiss();
 
     }
 

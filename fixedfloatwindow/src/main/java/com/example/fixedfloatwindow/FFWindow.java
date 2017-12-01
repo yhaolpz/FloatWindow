@@ -1,9 +1,10 @@
 package com.example.fixedfloatwindow;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.StyleableRes;
+import android.support.v4.media.RatingCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -11,13 +12,15 @@ import java.lang.reflect.Method;
 
 /**
  * Created by yhao on 17-11-14.
- * 固定(fixed)悬浮(float)控件
- * 可在手机任意界面显示
- * 4.4~7.0 无需权限可点击,  4.3及以下无触摸事件， 7.1及以上需申请权限
- * 不支持位置改变(因部分机型如小米无法实现)
+ * 应用内 固定(fixed) 悬浮(float) 窗
+ * 4.X~7.0 版本采用自定义 toast 方式，可绕过权限申请，
+ * 7.1 及以上采用权限申请 TYPE_PHONE 方式，需要申请权限
+ * 以上根据 Android 版本选择不同处理方式为最佳方案
+ * 你也可以轻松的选择其他方案测试、使用，见 ReqType.java
+ * 局限：不支持位置改变；4.3 版本及以下无法接收触摸事件
  */
 
-public class FFWindow implements FixedFloatView {
+public class FFWindow {
 
 
     /**
@@ -41,26 +44,26 @@ public class FFWindow implements FixedFloatView {
         switch (reqType) {
             case ReqType.AUTO_REQ:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                    mFixedFloatView = new FixedFloatPhone(applicationContext, true);
+                    mFixedFloatView = new FFPhone(applicationContext, true);
                 } else {
-                    mFixedFloatView = new FixedFloatToast(applicationContext);
+                    mFixedFloatView = new FFToast(applicationContext);
                 }
                 break;
             case ReqType.ME_REQ:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                    mFixedFloatView = new FixedFloatPhone(applicationContext, false);
+                    mFixedFloatView = new FFPhone(applicationContext, false);
                 } else {
-                    mFixedFloatView = new FixedFloatToast(applicationContext);
+                    mFixedFloatView = new FFToast(applicationContext);
                 }
                 break;
             case ReqType.ALL_AUTO_REQ:
-                mFixedFloatView = new FixedFloatPhone(applicationContext, true);
+                mFixedFloatView = new FFPhone(applicationContext, true);
                 break;
             case ReqType.ALL_ME_REQ:
-                mFixedFloatView = new FixedFloatPhone(applicationContext, false);
+                mFixedFloatView = new FFPhone(applicationContext, false);
                 break;
             case ReqType.NO_REQ:
-                mFixedFloatView = new FixedFloatToast(applicationContext);
+                mFixedFloatView = new FFToast(applicationContext);
                 break;
         }
     }
@@ -73,10 +76,10 @@ public class FFWindow implements FixedFloatView {
      * @param width  悬浮视图宽
      * @param height 悬浮视图高
      */
-    @Override
-    public void setView(View view, int width, int height) {
+    public FFWindow setView(View view, int width, int height) {
         mFixedFloatView.setView(view, width, height);
         mView = view;
+        return this;
     }
 
     /**
@@ -84,9 +87,9 @@ public class FFWindow implements FixedFloatView {
      *
      * @param view 要悬浮的视图
      */
-    @Override
-    public void setView(View view) {
+    public FFWindow setView(View view) {
         this.setView(view, WRAP_CONTENT, WRAP_CONTENT);
+        return this;
     }
 
     /**
@@ -96,44 +99,43 @@ public class FFWindow implements FixedFloatView {
      * @param xOffset 偏移距离
      * @param yOffset 偏移距离
      */
-    @Override
-    public void setGravity(int gravity, int xOffset, int yOffset) {
+    public FFWindow setGravity(int gravity, int xOffset, int yOffset) {
         mFixedFloatView.setGravity(gravity, xOffset, yOffset);
+        return this;
     }
 
     /**
      * 设置 Activity 过滤器，用于指定在哪些界面显示悬浮窗
      *
-     * @param filterType 　过滤类型,可设置 baseActivity 类型
+     * @param filterType 　过滤类型,子类类型也会生效
      * @param activities 　过滤界面
      */
-    public void setFilter(@FilterType.FILTER_TYPE int filterType, Class... activities) {
-        LifecycleCallbacks lifecycleCallbacks = null;
+    public FFWindow setFilter(@FilterType.FILTER_TYPE int filterType, Class... activities) {
         switch (filterType) {
             case FilterType.SHOW:
-                lifecycleCallbacks = new LifecycleCallbacks(this, true, activities);
+                new FFLifecycle(mApplicationContext, this, true, activities);
                 break;
             case FilterType.NOT_SHOW:
-                lifecycleCallbacks = new LifecycleCallbacks(this, false, activities);
+                new FFLifecycle(mApplicationContext, this, false, activities);
                 break;
         }
-        ((Application) mApplicationContext).registerActivityLifecycleCallbacks(lifecycleCallbacks);
+        return this;
     }
 
 
     /**
      * 显示悬浮窗
      */
-    @Override
-    public void show() {
+    public FFWindow show() {
         if (once) {
             mFixedFloatView.show();
             once = false;
         } else {
-            if (isShow) return;
+            if (isShow) return this;
             mView.setVisibility(View.VISIBLE);
             isShow = true;
         }
+        return this;
     }
 
     /**
@@ -149,7 +151,6 @@ public class FFWindow implements FixedFloatView {
     /**
      * 销毁悬浮窗，调用后不可再通过 show 方法显示，一般情况下不需要调用
      */
-    @Override
     public void dismiss() {
         mFixedFloatView.dismiss();
         isShow = false;
@@ -157,6 +158,7 @@ public class FFWindow implements FixedFloatView {
 
     /**
      * 申请权限回调，注意只有设置内部自动申请权限才需要设置此监听，否则也不会回调
+     * 一般情况下不需要设置监听，因为权限申请成功后显示悬浮窗的操作都在内部封装好了
      */
     public void setPermissionListener(PermissionListener permissionListener) {
         mPermissionListener = permissionListener;
@@ -187,8 +189,6 @@ public class FFWindow implements FixedFloatView {
     }
 
 
-
-
     void postHide() {
         if (once || !isShow) return;
         mView.post(new Runnable() {
@@ -207,9 +207,6 @@ public class FFWindow implements FixedFloatView {
     private boolean isShow;
     private boolean once = true;
     private View mView;
-
-
-
 
 
 }

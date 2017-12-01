@@ -9,36 +9,13 @@ import android.view.View;
 
 interface FixedFloatView {
 
-
-    /**
-     * 设置悬浮控件视图
-     */
     void setView(View view, int width, int height);
 
-
-    /**
-     * 设置悬浮控件视图
-     */
     void setView(View view);
 
-
-    /**
-     * 设置悬浮控件位置
-     */
     void setGravity(int gravity, int xOffset, int yOffset);
 
-
-    /**
-     * 显示悬浮控件
-     */
     void show();
 
-
-
-    /**
-     * 销毁悬浮控件
-     */
     void dismiss();
-
-
 }

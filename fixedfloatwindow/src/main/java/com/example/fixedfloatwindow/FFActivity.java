@@ -12,7 +12,7 @@ import android.support.annotation.RequiresApi;
  * 用于在内部自动申请权限
  */
 
-public class FixedFloatActivity extends Activity {
+public class FFActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
