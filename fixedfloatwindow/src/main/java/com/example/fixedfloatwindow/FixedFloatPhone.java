@@ -58,7 +58,7 @@ class FixedFloatPhone implements FixedFloatView {
 
     @Override
     public void show() {
-        if (FixedFloatWindow.hasPermission(mContext)) {
+        if (FFWindow.hasPermission(mContext)) {
             mWindowManager.addView(mView, mLayoutParams);
         } else {
             if (mAutoReqPermission) {
@@ -66,15 +66,15 @@ class FixedFloatPhone implements FixedFloatView {
                     @Override
                     public void onSuccess() {
                         mWindowManager.addView(mView, mLayoutParams);
-                        if (FixedFloatWindow.mPermissionListener != null) {
-                            FixedFloatWindow.mPermissionListener.onSuccess();
+                        if (FFWindow.mPermissionListener != null) {
+                            FFWindow.mPermissionListener.onSuccess();
                         }
                     }
 
                     @Override
                     public void onFail() {
-                        if (FixedFloatWindow.mPermissionListener != null) {
-                            FixedFloatWindow.mPermissionListener.onFail();
+                        if (FFWindow.mPermissionListener != null) {
+                            FFWindow.mPermissionListener.onFail();
                         }
                     }
                 });
@@ -82,7 +82,7 @@ class FixedFloatPhone implements FixedFloatView {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             } else {
-                throw new IllegalArgumentException("请将 FixedFloatWindow 设置为自动申请权限，或自行申请权限！");
+                throw new IllegalArgumentException("请将 FFWindow 设置为自动申请权限，或自行申请权限！");
             }
         }
     }

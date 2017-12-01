@@ -45,13 +45,13 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-    FixedFloatWindow fixedFloatWindow = new FixedFloatWindow(getApplicationContext());
-    fixedFloatWindow.setView(view);
-    fixedFloatWindow.setGravity(Gravity.RIGHT | Gravity.TOP, 100, 150);
+    FixedFloatWindow FFWindow = new FixedFloatWindow(getApplicationContext());
+    FFWindow.setView(view);
+    FFWindow.setGravity(Gravity.RIGHT | Gravity.TOP, 100, 150);
 
-    fixedFloatWindow.show();
-//   fixedFloatWindow.hide();
-//   fixedFloatWindow.dismiss();
+    FFWindow.show();
+//   FFWindow.hide();
+//   FFWindow.dismiss();
 ```
 
 效果：
@@ -64,7 +64,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-    FixedFloatWindow fixedFloatWindow = new FixedFloatWindow(
+    FixedFloatWindow FFWindow = new FixedFloatWindow(
              getApplicationContext(), FixedFloatWindow.ALL_AUTO_REQ );
 
 ```
