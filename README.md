@@ -11,9 +11,9 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 3.应用退到后台会自动隐藏，无需再次封装，自动控制于应用内显示
 
-3.提供其他悬浮窗实现方案，可灵活修改
+4.提供其他悬浮窗实现方案，可灵活修改
 
-6.悬浮窗位置不能改变；安卓 4.4 以下无法接收触摸事件
+5.悬浮窗位置不能改变；安卓 4.4 以下无法接收触摸事件
 
 
 集成：
@@ -67,7 +67,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-      setFilter(FilterType.SHOW, A_Activity.class, C_Activity.class)
+    setFilter(FilterType.SHOW, A_Activity.class, C_Activity.class)
 
 ```
 此方法表示 A_Activity、C_Activity 显示悬浮窗，其他界面屏蔽。
@@ -75,7 +75,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-      setFilter(FilterType.NOT_SHOW, B_Activity.class)
+    setFilter(FilterType.NOT_SHOW, B_Activity.class)
 
 ```
 此方法表示 B_Activity 屏蔽悬浮窗，其他界面显示。
@@ -86,7 +86,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-      setFilter(FilterType.NOT_SHOW, BaseActivity.class)
+    setFilter(FilterType.NOT_SHOW, BaseActivity.class)
 
 ```
 
@@ -99,8 +99,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-    FFWindow ffWindow = new FFWindow(
-             getApplicationContext(), ReqType.ALL_AUTO_REQ );
+    FFWindow ffWindow = new FFWindow(getApplicationContext(), ReqType.ALL_AUTO_REQ );
 
 ```
 
@@ -118,6 +117,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
     5. NO_REQ :  所有版本都采用自定义 toast 方式跳过权限申请，不兼容 7.1 及以上版本，不推荐
 
 
+如果对你有帮助，star 支持一下呗，感谢 ~ ~
 
 方案历程：
 ===
