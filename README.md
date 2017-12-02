@@ -86,7 +86,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```java
 
-    setFilter(FilterType.NOT_SHOW, BaseActivity.class)
+    setFilter(FilterType.SHOW, BaseActivity.class)
 
 ```
 
@@ -125,18 +125,25 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 1.修复未调用show显示悬浮窗bug
 
+
 **FixedFloatWindow v1.0.4 （2017.12.01）：**
 
 1.返回桌面将会自动隐藏控件，无需再监听应用退到后台等操作
+
 2.新增 Activity 过滤器，可自由指定哪些界面显示，哪些界面不显示
+
 3.FixedFloatWindow 类改为 FFWindow
+
 
 
 **FixedFloatWindow v1.0.3 （2017.11.27）：**
 
 1.修复已知 bug
+
 2.新增 dismiss 方法
+
 3.新增其他方案，如:所有版本都申请权限
+
 
 
 方案历程：
