@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FixedFloatWindow.iml" filepath="$PROJECT_DIR$/FixedFloatWindow.iml" />
       <module fileurl="file://C:\Users\yhao\AndroidStudioProjects\FixedFloatWindow\sample\app.iml" filepath="C:\Users\yhao\AndroidStudioProjects\FixedFloatWindow\sample\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FixedFloatWindow.iml" filepath="$PROJECT_DIR$/FixedFloatWindow.iml" />
       <module fileurl="file://$PROJECT_DIR$/fixedfloatwindow/fixedfloatwindow.iml" filepath="$PROJECT_DIR$/fixedfloatwindow/fixedfloatwindow.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>

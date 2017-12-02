@@ -56,7 +56,7 @@ class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifec
     public void onActivityResumed(Activity activity) {
         resumeCount++;
         if (needShow(activity)) {
-            mFFWindow.show();
+            mFFWindow.afterOnceShow();
         } else {
             mFFWindow.hide();
         }

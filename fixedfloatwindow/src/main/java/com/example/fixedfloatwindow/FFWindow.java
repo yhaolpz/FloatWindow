@@ -148,6 +148,8 @@ public class FFWindow {
     }
 
 
+
+
     /**
      * 销毁悬浮窗，调用后不可再通过 show 方法显示，一般情况下不需要调用
      */
@@ -189,6 +191,19 @@ public class FFWindow {
     }
 
 
+    /**
+     * 供 FFlifecycle 调用，防止在未调用 show 的情况下显示悬浮窗
+     */
+    void afterOnceShow() {
+        if (once) {
+            return;
+        }
+        show();
+    }
+
+    /**
+     * 供 FFlifecycle　调用，方便切换线程
+     */
     void postHide() {
         if (once || !isShow) return;
         mView.post(new Runnable() {
@@ -199,6 +214,7 @@ public class FFWindow {
         });
         isShow = false;
     }
+
 
 
     private Context mApplicationContext;
