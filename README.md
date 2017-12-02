@@ -33,7 +33,7 @@ Andorid 任意界面悬浮窗，适配 4.x~7.1 及各大国产机型，无需申
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.4'
+	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.5'
 	}
 ```
 
