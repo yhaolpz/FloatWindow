@@ -44,6 +44,14 @@
 使用：
 ===
 
+**0.声明权限**
+
+```java
+
+     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+```
+
 **1.创建悬浮控件**
 
 ```java
