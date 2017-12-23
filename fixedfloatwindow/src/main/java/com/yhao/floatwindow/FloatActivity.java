@@ -1,6 +1,7 @@
-package com.example.fixedfloatwindow;
+package com.yhao.floatwindow;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -8,11 +9,17 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 用于在内部自动申请权限
+ * https://github.com/yhaolpz
  */
 
-public class FFActivity extends Activity {
+public class FloatActivity extends Activity {
+
+    private static List<PermissionListener> mPermissionListenerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +49,31 @@ public class FFActivity extends Activity {
         finish();
     }
 
-    public static void setPermissionListener(PermissionListener permissionListener) {
-        mPermissionListener = permissionListener;
+    static synchronized void request(Context context,PermissionListener permissionListener) {
+        if (mPermissionListenerList == null) {
+            mPermissionListenerList = new ArrayList<>();
+            mPermissionListener = new PermissionListener() {
+                @Override
+                public void onSuccess() {
+                    for (PermissionListener listener : mPermissionListenerList) {
+                        listener.onSuccess();
+                    }
+                }
+
+                @Override
+                public void onFail() {
+                    for (PermissionListener listener : mPermissionListenerList) {
+                        listener.onFail();
+                    }
+                }
+            };
+            Intent intent = new Intent(context, FloatActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+        mPermissionListenerList.add(permissionListener);
     }
+
 
     private static PermissionListener mPermissionListener;
 }

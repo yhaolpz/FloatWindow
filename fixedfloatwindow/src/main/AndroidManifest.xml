@@ -2,7 +2,7 @@
           package="com.example.fixedfloatwindow">
 <application>
 <activity
-    android:name=".FFActivity"
+    android:name="com.yhao.floatwindow.FloatActivity"
     android:configChanges="keyboardHidden|orientation|screenSize"
     android:launchMode="standard"
     android:theme="@style/permission_PermissionActivity"

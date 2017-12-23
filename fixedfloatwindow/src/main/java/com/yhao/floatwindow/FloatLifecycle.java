@@ -1,4 +1,4 @@
-package com.example.fixedfloatwindow;
+package com.yhao.floatwindow;
 
 import android.app.Activity;
 import android.app.Application;
@@ -18,24 +18,24 @@ import android.os.Handler;
  * 3.resumeCount计时，针对一些只执行onPause不执行onStop的奇葩情况
  */
 
-class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifecycleCallbacks {
+class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLifecycleCallbacks {
 
     private static final String SYSTEM_DIALOG_REASON_KEY = "reason";
     private static final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
     private static final long delay = 300;
-    private FFWindow mFFWindow;
     private Handler mHandler;
     private Class[] activities;
     private boolean showFlag;
     private int startCount;
     private int resumeCount;
     private boolean appBackground;
+    private LifecycleListener mLifecycleListener;
 
 
-    FFLifecycle(Context applicationContext, FFWindow ffWindow, boolean showFlag, Class[] activities) {
-        this.mFFWindow = ffWindow;
+    FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities,LifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;
+        mLifecycleListener = lifecycleListener;
         mHandler = new Handler();
         ((Application) applicationContext).registerActivityLifecycleCallbacks(this);
         applicationContext.registerReceiver(this,new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
@@ -43,6 +43,9 @@ class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifec
 
 
     private boolean needShow(Activity activity) {
+        if (activities == null) {
+            return true;
+        }
         for (Class a : activities) {
             if (a.isInstance(activity)) {
                 return showFlag;
@@ -56,9 +59,9 @@ class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifec
     public void onActivityResumed(Activity activity) {
         resumeCount++;
         if (needShow(activity)) {
-            mFFWindow.afterOnceShow();
+            mLifecycleListener.onShow();
         } else {
-            mFFWindow.hide();
+            mLifecycleListener.onHide();
         }
         if (appBackground) {
             appBackground = false;
@@ -73,13 +76,12 @@ class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifec
             public void run() {
                 if (resumeCount == 0) {
                     appBackground = true;
-                    mFFWindow.postHide();
+                    mLifecycleListener.onPostHide();
                 }
             }
         }, delay);
 
     }
-
 
     @Override
     public void onActivityStarted(Activity activity) {
@@ -91,7 +93,7 @@ class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifec
     public void onActivityStopped(Activity activity) {
         startCount--;
         if (startCount == 0) {
-            mFFWindow.hide();
+            mLifecycleListener.onHide();
         }
     }
 
@@ -101,7 +103,7 @@ class FFLifecycle extends BroadcastReceiver implements Application.ActivityLifec
         if (action != null && action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
             String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
             if (SYSTEM_DIALOG_REASON_HOME_KEY.equals(reason)) {
-                mFFWindow.hide();
+                mLifecycleListener.onHide();
             }
         }
     }

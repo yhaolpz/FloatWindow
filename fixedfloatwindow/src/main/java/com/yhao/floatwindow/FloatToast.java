@@ -1,4 +1,4 @@
-package com.example.fixedfloatwindow;
+package com.yhao.floatwindow;
 
 import android.content.Context;
 import android.view.View;
@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  * 自定义 toast 方式，无需申请权限
  */
 
-class FFToast implements FixedFloatView {
+class FloatToast extends FloatView {
 
 
     private Toast toast;
@@ -24,32 +24,31 @@ class FFToast implements FixedFloatView {
     private int mWidth;
     private int mHeight;
 
-    private int mAnim;
 
-    FFToast(Context applicationContext) {
+    FloatToast(Context applicationContext) {
         toast = new Toast(applicationContext);
     }
 
 
-    public void setView(View view, int width, int height) {
+    @Override
+    public void setSize(int width, int height) {
         mWidth = width;
         mHeight = height;
-        setView(view);
     }
 
-
+    @Override
     public void setView(View view) {
         toast.setView(view);
         initTN();
     }
 
-
+    @Override
     public void setGravity(int gravity, int xOffset, int yOffset) {
         toast.setGravity(gravity, xOffset, yOffset);
     }
 
-
-    public void show() {
+    @Override
+    public void init() {
         try {
             show.invoke(mTN);
         } catch (Exception e) {
@@ -57,7 +56,7 @@ class FFToast implements FixedFloatView {
         }
     }
 
-
+    @Override
     public void dismiss() {
         try {
             hide.invoke(mTN);
@@ -67,9 +66,6 @@ class FFToast implements FixedFloatView {
     }
 
 
-    /**
-     * 利用反射设置 toast 参数
-     */
     private void initTN() {
         try {
             Field tnField = toast.getClass().getDeclaredField("mTN");
@@ -85,7 +81,7 @@ class FFToast implements FixedFloatView {
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
             params.width = mWidth;
             params.height = mHeight;
-            params.windowAnimations = mAnim;
+            params.windowAnimations = 0;
             Field tnNextViewField = mTN.getClass().getDeclaredField("mNextView");
             tnNextViewField.setAccessible(true);
             tnNextViewField.set(mTN, toast.getView());
