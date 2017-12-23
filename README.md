@@ -214,7 +214,7 @@ MoveType.free    : 不可拖动，但可改变位置
 
 ```
 
-在 [sample]() 中也有示例代码。
+在 [sample](https://github.com/yhaolpz/FloatWindow/blob/master/sample/src/main/java/com/example/yhao/floatwindow/BaseApplication.java) 中也有示例代码。
 
 **更新日志**
 --
