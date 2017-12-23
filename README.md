@@ -1,9 +1,6 @@
 # FloatWindow 安卓任意界面悬浮窗
 
-![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/slide.gif) ![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/back.gif)
-
-
-上图效果实现代码[点击此处查看]()
+![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/slide.gif)
 
 特性：
 ===
@@ -147,7 +144,7 @@ MoveType.free    : 不可拖动，但可改变位置
 
 ```
 
-自定义贴边或回到原位置过程的动画效果，只在 MoveType.slide 或 MoveType.back 模式下设置此项才有意义。默认动画时长为 300ms，减速插值器。
+自定义贴边或回到原位置过程的动画效果，只在 MoveType.slide 或 MoveType.back 模式下设置此项才有意义。默认减速插值器，默认动画时长为 300ms。
 
 
 **7.后续操作**
@@ -194,11 +191,35 @@ MoveType.free    : 不可拖动，但可改变位置
 创建第一个悬浮窗不需加 tag，之后再创建就需指定唯一 tag ，以此区分，方便进行后续操作。
 
 
+举个栗子：
+===
+
+![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/back.gif)
+
+此效果实现全部代码为下：
+
+```java
+
+        FloatWindow
+                .with(getApplicationContext())
+                .setView(imageView)
+                .setWidth(Screen.width,0.2f)
+                .setHeight(Screen.width,0.2f)
+                .setX(Screen.width,0.7f)
+                .setY(Screen.height,0.2f)
+                .setMoveType(MoveType.back)
+                .setMoveStyle(300,null)
+                .setFilter(true,A_Activity.class,C_Activity.class)
+                .build();
+
+```
+
+在 [sample]() 中也有示例代码。
 
 **更新日志**
 --
 
-** v1.0.6 ：**
+**v1.0.6**
 
 1.支持悬浮窗拖动及相关动效
 
@@ -207,13 +228,13 @@ MoveType.free    : 不可拖动，但可改变位置
 3.更改相关类名及使用方法
 
 
-** v1.0.5 ：**
+**v1.0.5**
 
 1.修复未调用show显示悬浮窗bug
 
 
 
-** v1.0.4 ：**
+**v1.0.4**
 
 1.返回桌面将会自动隐藏控件，无需再监听应用退到后台等操作
 
@@ -223,7 +244,7 @@ MoveType.free    : 不可拖动，但可改变位置
 
 
 
-** v1.0.3 ：**
+**v1.0.3**
 
 1.修复已知 bug
 
