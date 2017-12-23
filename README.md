@@ -37,7 +37,7 @@
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FixedFloatWindow:1.0.6'
+	        compile 'com.github.yhaolpz:FloatWindow:1.0.6'
 	}
 ```
 
