@@ -1,7 +1,9 @@
-package com.example.yhao.fixedfloatwindow;
+package com.example.yhao.floatwindow;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.yhao.fixedfloatwindow.R;
 
 public class C_Activity extends BaseActivity {
 

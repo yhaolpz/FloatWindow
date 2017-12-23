@@ -1,9 +1,10 @@
-package com.example.yhao.fixedfloatwindow;
+package com.example.yhao.floatwindow;
 
 import android.app.Application;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 
+import com.example.yhao.fixedfloatwindow.R;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.MoveType;
 import com.yhao.floatwindow.Screen;

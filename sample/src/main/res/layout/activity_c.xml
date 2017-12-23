@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.yhao.fixedfloatwindow.C_Activity">
+    tools:context="com.example.yhao.fixedfloatwindow.com.example.yhao.floatwindow.C_Activity">
 
     <Button
         android:layout_width="wrap_content"

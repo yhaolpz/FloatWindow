@@ -9,19 +9,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:name=".BaseApplication"
+        android:name="com.example.yhao.floatwindow.BaseApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".A_Activity">
+        <activity android:name="com.example.yhao.floatwindow.A_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".B_Activity" />
-        <activity android:name=".C_Activity" />
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name="com.example.yhao.floatwindow.B_Activity" />
+        <activity android:name="com.example.yhao.floatwindow.C_Activity" />
+        <activity android:name="com.example.yhao.floatwindow.BaseActivity"></activity>
     </application>
 
 </manifest>

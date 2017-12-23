@@ -1,1 +1,1 @@
-include ':sample', ':fixedfloatwindow'
+include ':sample', ':floatwindow'

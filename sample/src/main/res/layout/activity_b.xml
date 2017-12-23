@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yhao.fixedfloatwindow.B_Activity"
+    tools:context="com.example.yhao.fixedfloatwindow.com.example.yhao.floatwindow.B_Activity"
     android:orientation="vertical"
     android:gravity="center"
     >

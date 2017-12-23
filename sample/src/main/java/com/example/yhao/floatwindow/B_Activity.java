@@ -1,11 +1,10 @@
-package com.example.yhao.fixedfloatwindow;
+package com.example.yhao.floatwindow;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.yhao.floatwindow.FloatActivity;
-import com.yhao.floatwindow.FloatWindow;
+import com.example.yhao.fixedfloatwindow.R;
 
 public class B_Activity extends BaseActivity {
 

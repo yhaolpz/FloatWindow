@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yhao.fixedfloatwindow.BaseActivity">
+    tools:context="com.example.yhao.fixedfloatwindow.com.example.yhao.floatwindow.BaseActivity">
 
 </android.support.constraint.ConstraintLayout>
