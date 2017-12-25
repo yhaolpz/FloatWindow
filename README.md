@@ -37,7 +37,7 @@
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FloatWindow:1.0.6'
+	        compile 'com.github.yhaolpz:FloatWindow:1.0.7'
 	}
 ```
 
@@ -85,7 +85,7 @@ setView 方法可设置 View 子类或 xml 布局。
               .with(getApplicationContext())
               .setView(view)
               .setX(100)                      //100px
-              .setY(Screen.width,0.2f)        //屏幕宽度的 20%
+              .setY(Screen.height,0.3f)       //屏幕高度的 30%
               .build();
 
 ```
@@ -152,7 +152,7 @@ MoveType.free    : 不可拖动，但可改变位置
 
 ```
 
-自定义贴边或回到原位置过程的动画效果，只在 MoveType.slide 或 MoveType.back 模式下设置此项才有意义。默认减速插值器，默认动画时长为 300ms。
+自定义动画效果，只在 MoveType.slide 或 MoveType.back 模式下设置此项才有意义。默认减速插值器，默认动画时长为 300ms。
 
 
 **7.后续操作**
@@ -226,6 +226,11 @@ MoveType.free    : 不可拖动，但可改变位置
 
 **更新日志**
 --
+
+**v1.0.7**
+
+1.适配 Android 8.0
+
 
 **v1.0.6**
 

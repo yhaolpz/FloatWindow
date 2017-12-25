@@ -2,6 +2,7 @@ package com.yhao.floatwindow;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -35,7 +36,11 @@ class FloatPhone extends FloatView {
     public void setView(View view) {
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }else{
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
         mLayoutParams.windowAnimations = 0;
         mView = view;
     }
