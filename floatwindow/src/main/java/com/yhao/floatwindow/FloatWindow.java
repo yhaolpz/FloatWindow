@@ -65,10 +65,11 @@ public class FloatWindow {
         int yOffset;
         boolean mShow = true;
         Class[] mActivities;
-        int mMoveType = MoveType.fixed;
+        int mMoveType = MoveType.slide;
         long mDuration = 300;
         TimeInterpolator mInterpolator;
         private String mTag = mDefaultTag;
+         boolean mDesktopShow;
 
         private B() {
 
@@ -165,6 +166,11 @@ public class FloatWindow {
 
         public B setTag(@NonNull String tag) {
             mTag = tag;
+            return this;
+        }
+
+        public B setDesktopShow(boolean show) {
+            mDesktopShow = show;
             return this;
         }
 

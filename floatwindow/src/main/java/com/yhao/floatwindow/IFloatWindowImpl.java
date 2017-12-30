@@ -58,8 +58,10 @@ public class IFloatWindowImpl extends IFloatWindow {
             }
 
             @Override
-            public void onPostHide() {
-                postHide();
+            public void onBackToDesktop() {
+                if (!mB.mDesktopShow) {
+                    hide();
+                }
             }
         });
     }
@@ -140,16 +142,6 @@ public class IFloatWindowImpl extends IFloatWindow {
         return mB.mView;
     }
 
-    void postHide() {
-        if (once || !isShow) return;
-        getView().post(new Runnable() {
-            @Override
-            public void run() {
-                getView().setVisibility(View.INVISIBLE);
-            }
-        });
-        isShow = false;
-    }
 
     private void checkMoveType() {
         if (mB.mMoveType == MoveType.fixed) {
@@ -159,7 +151,7 @@ public class IFloatWindowImpl extends IFloatWindow {
 
     private void initTouchEvent() {
         switch (mB.mMoveType) {
-            case MoveType.free:
+            case MoveType.inactive:
                 break;
             default:
                 getView().setOnTouchListener(new View.OnTouchListener() {

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 /**
  * Created by yhao on 17-12-1.
@@ -30,17 +31,23 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     private int resumeCount;
     private boolean appBackground;
     private LifecycleListener mLifecycleListener;
+    private static ResumedListener sResumedListener;
+    private static int num = 0;
 
 
-    FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities,LifecycleListener lifecycleListener) {
+    FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities, LifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;
+        num++;
         mLifecycleListener = lifecycleListener;
         mHandler = new Handler();
         ((Application) applicationContext).registerActivityLifecycleCallbacks(this);
-        applicationContext.registerReceiver(this,new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        applicationContext.registerReceiver(this, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
     }
 
+    public static void setResumedListener(ResumedListener resumedListener) {
+        sResumedListener = resumedListener;
+    }
 
     private boolean needShow(Activity activity) {
         if (activities == null) {
@@ -57,6 +64,13 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
 
     @Override
     public void onActivityResumed(Activity activity) {
+        if (sResumedListener != null) {
+            num--;
+            if (num == 0) {
+                sResumedListener.onResumed();
+                sResumedListener = null;
+            }
+        }
         resumeCount++;
         if (needShow(activity)) {
             mLifecycleListener.onShow();
@@ -69,14 +83,14 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     }
 
     @Override
-    public void onActivityPaused(Activity activity) {
+    public void onActivityPaused(final Activity activity) {
         resumeCount--;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (resumeCount == 0) {
                     appBackground = true;
-                    mLifecycleListener.onPostHide();
+                    mLifecycleListener.onBackToDesktop();
                 }
             }
         }, delay);
@@ -93,7 +107,7 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     public void onActivityStopped(Activity activity) {
         startCount--;
         if (startCount == 0) {
-            mLifecycleListener.onHide();
+            mLifecycleListener.onBackToDesktop();
         }
     }
 
@@ -103,7 +117,7 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
         if (action != null && action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
             String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
             if (SYSTEM_DIALOG_REASON_HOME_KEY.equals(reason)) {
-                mLifecycleListener.onHide();
+                mLifecycleListener.onBackToDesktop();
             }
         }
     }
@@ -124,9 +138,6 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     public void onActivityDestroyed(Activity activity) {
 
     }
-
-
-
 
 
 }

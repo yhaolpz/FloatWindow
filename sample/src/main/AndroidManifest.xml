@@ -21,7 +21,7 @@
         </activity>
         <activity android:name="com.example.yhao.floatwindow.B_Activity" />
         <activity android:name="com.example.yhao.floatwindow.C_Activity" />
-        <activity android:name="com.example.yhao.floatwindow.BaseActivity"></activity>
+        <activity android:name="com.example.yhao.floatwindow.BaseActivity"/>
     </application>
 
 </manifest>

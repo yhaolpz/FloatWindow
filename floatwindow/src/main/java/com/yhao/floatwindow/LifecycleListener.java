@@ -11,5 +11,5 @@ interface LifecycleListener {
 
     void onHide();
 
-    void onPostHide();
+    void onBackToDesktop();
 }

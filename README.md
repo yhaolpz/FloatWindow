@@ -13,7 +13,7 @@
 
 4.应用退到后台时，悬浮窗会自动隐藏
 
-5.位置不可变的悬浮窗无需权限申请
+5.除小米外，4.4~7.0 无需权限申请
 
 6.位置及宽高可设置百分比值，轻松适配各分辨率
 
@@ -37,7 +37,7 @@
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FloatWindow:1.0.7'
+	        compile 'com.github.yhaolpz:FloatWindow:1.0.8'
 	}
 ```
 
@@ -64,7 +64,7 @@
 
 setView 方法可设置 View 子类或 xml 布局。
 
-**2.控件宽高**
+**2.设置宽高及显示位置**
 
 ```java
         FloatWindow
@@ -72,27 +72,16 @@ setView 方法可设置 View 子类或 xml 布局。
               .setView(view)
               .setWidth(100)                   //100px
               .setHeight(Screen.width,0.2f)    //屏幕宽度的 20%
+              .setX(100)                       //100px
+              .setY(Screen.height,0.3f)        //屏幕高度的 30%
               .build();
 
 ```
 
-可设置具体数值或屏幕宽/高百分比，默认为 wrap_content。
+可设置具体数值或屏幕宽/高百分比，默认宽高为 wrap_content；默认位置为屏幕左上角，x、y 为偏移量。
 
-**3.显示位置**
 
-```java
-        FloatWindow
-              .with(getApplicationContext())
-              .setView(view)
-              .setX(100)                      //100px
-              .setY(Screen.height,0.3f)       //屏幕高度的 30%
-              .build();
-
-```
-
-可设置具体数值或屏幕宽/高百分比，默认为 0，以屏幕左上角为原点。
-
-**4.指定界面显示**
+**3.指定界面显示**
 
 ```java
         FloatWindow
@@ -117,6 +106,17 @@ setView 方法可设置 View 子类或 xml 布局。
               .setFilter(true, BaseActivity.class)
 ```
 
+**4.桌面显示**
+
+```java
+        FloatWindow
+              .with(getApplicationContext())
+              .setView(view)
+              .setDesktopShow(true)                //默认 false
+              .build();
+
+```
+
 **5.可拖动悬浮窗**
 
 ```java
@@ -130,15 +130,14 @@ setView 方法可设置 View 子类或 xml 布局。
 
 共提供 4 种 MoveType :
 
-MoveType.slide   : 可拖动，释放后自动贴边
+MoveType.slide       : 可拖动，释放后自动贴边 （默认）
 
-MoveType.back    : 可拖动，释放后自动回到原位置
+MoveType.back        : 可拖动，释放后自动回到原位置
 
-MoveType.active  : 可拖动
+MoveType.active      : 可拖动
 
-MoveType.free    : 不可拖动，但可改变位置
+MoveType.inactive    : 不可拖动
 
-如不设置，则为 fixed 模式，不可改变位置。
 
 **6.悬浮窗动画**
 
@@ -171,7 +170,7 @@ MoveType.free    : 不可拖动，但可改变位置
 
 ```
 
-以上操作应待悬浮窗初始化后进行，注意不能对 fixed 模式悬浮窗修改显示位置。
+以上操作应待悬浮窗初始化后进行。
 
 
 **8.多个悬浮窗**
@@ -224,46 +223,59 @@ MoveType.free    : 不可拖动，但可改变位置
 
 在 [sample](https://github.com/yhaolpz/FloatWindow/blob/master/sample/src/main/java/com/example/yhao/floatwindow/BaseApplication.java) 中也有示例代码。
 
+最后：
+--
+![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/pay.gif)
+
+本人已尽量去兼容更多机型，但经济有限，如果你想帮助此库，提 Issues 标出当前版本不适配的机型即可，感谢~
+
+
 **更新日志**
 --
 
+**v1.0.8**
+
+ 适配 4.4~8.0 及各大国产机型
+
+ 支持桌面显示
+
+
 **v1.0.7**
 
-1.适配 Android 8.0
+ 适配 Android 8.0
 
 
 **v1.0.6**
 
-1.支持悬浮窗拖动及相关动效
+ 支持悬浮窗拖动及相关动效
 
-2.位置及宽高可设置百分比值
+ 位置及宽高可设置百分比值
 
-3.更改相关类名及使用方法
+ 更改相关类名及使用方法
 
 
 **v1.0.5**
 
-1.修复未调用show显示悬浮窗bug
-
+ 修复未调用show显示悬浮窗bug
 
 
 **v1.0.4**
 
-1.返回桌面将会自动隐藏控件，无需再监听应用退到后台等操作
+ 返回桌面将会自动隐藏控件，无需再监听应用退到后台等操作
 
-2.新增 Activity 过滤器，可自由指定哪些界面显示，哪些界面不显示
+ 新增 Activity 过滤器，可自由指定哪些界面显示，哪些界面不显示
 
-3.FixedFloatWindow 类改为 FFWindow
+ FixedFloatWindow 类改为 FFWindow
 
 
 
 **v1.0.3**
 
-1.修复已知 bug
+ 修复已知 bug
 
-2.新增 dismiss 方法
+ 新增 dismiss 方法
 
-3.新增其他方案，如:所有版本都申请权限
+ 新增其他方案，如:所有版本都申请权限
 
 
 

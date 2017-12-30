@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 /**
  * Created by yhao on 17-11-14.
- * 7.1及以上需申请权限
+ * https://github.com/yhaolpz
  */
 
 class FloatPhone extends FloatView {
@@ -24,6 +24,9 @@ class FloatPhone extends FloatView {
         mContext = applicationContext;
         mWindowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
         mLayoutParams = new WindowManager.LayoutParams();
+        mLayoutParams.format = PixelFormat.RGBA_8888;
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        mLayoutParams.windowAnimations = 0;
     }
 
     @Override
@@ -34,14 +37,6 @@ class FloatPhone extends FloatView {
 
     @Override
     public void setView(View view) {
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-        }else{
-            mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        }
-        mLayoutParams.windowAnimations = 0;
         mView = view;
     }
 
@@ -55,23 +50,52 @@ class FloatPhone extends FloatView {
 
     @Override
     public void init() {
-        if (Util.hasPermission(mContext)) {
-            mLayoutParams.format = PixelFormat.RGBA_8888;
-            mWindowManager.addView(mView, mLayoutParams);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            req();
+        } else if (Miui.rom()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                req();
+            } else {
+                mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+                Miui.req(mContext, new PermissionListener() {
+                    @Override
+                    public void onSuccess() {
+                        mWindowManager.addView(mView, mLayoutParams);
+                    }
+
+                    @Override
+                    public void onFail() {
+                    }
+                });
+            }
         } else {
-            FloatActivity.request(mContext, new PermissionListener() {
-                @Override
-                public void onSuccess() {
-                    mLayoutParams.format = PixelFormat.RGBA_8888;
-                    mWindowManager.addView(mView, mLayoutParams);
-                }
-
-                @Override
-                public void onFail() {
-
-                }
-            });
+            try {
+                mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+                mWindowManager.addView(mView, mLayoutParams);
+            } catch (Exception e) {
+                mWindowManager.removeView(mView);
+                LogUtil.e("TYPE_TOAST 失败");
+                req();
+            }
         }
+    }
+
+    private void req() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+        FloatActivity.request(mContext, new PermissionListener() {
+            @Override
+            public void onSuccess() {
+                mWindowManager.addView(mView, mLayoutParams);
+            }
+
+            @Override
+            public void onFail() {
+            }
+        });
     }
 
     @Override
@@ -108,4 +132,6 @@ class FloatPhone extends FloatView {
     int getY() {
         return mY;
     }
+
+
 }

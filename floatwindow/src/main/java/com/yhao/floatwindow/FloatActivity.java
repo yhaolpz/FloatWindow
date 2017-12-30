@@ -20,6 +20,8 @@ import java.util.List;
 public class FloatActivity extends Activity {
 
     private static List<PermissionListener> mPermissionListenerList;
+    private static PermissionListener mPermissionListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +35,28 @@ public class FloatActivity extends Activity {
     private void requestAlertWindowPermission() {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 756232212);
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (Settings.canDrawOverlays(this)) {
-            mPermissionListener.onSuccess();
-        } else {
-            mPermissionListener.onFail();
+        if (requestCode == 756232212) {
+            if (PermissionUtil.hasPermissionOnActivityResult(this)) {
+                mPermissionListener.onSuccess();
+            } else {
+                mPermissionListener.onSuccess();
+            }
         }
         finish();
     }
 
-    static synchronized void request(Context context,PermissionListener permissionListener) {
+    static synchronized void request(Context context, PermissionListener permissionListener) {
+        if (PermissionUtil.hasPermission(context)) {
+            permissionListener.onSuccess();
+            return;
+        }
         if (mPermissionListenerList == null) {
             mPermissionListenerList = new ArrayList<>();
             mPermissionListener = new PermissionListener() {
@@ -58,6 +65,7 @@ public class FloatActivity extends Activity {
                     for (PermissionListener listener : mPermissionListenerList) {
                         listener.onSuccess();
                     }
+                    mPermissionListenerList.clear();
                 }
 
                 @Override
@@ -65,6 +73,7 @@ public class FloatActivity extends Activity {
                     for (PermissionListener listener : mPermissionListenerList) {
                         listener.onFail();
                     }
+                    mPermissionListenerList.clear();
                 }
             };
             Intent intent = new Intent(context, FloatActivity.class);
@@ -75,5 +84,4 @@ public class FloatActivity extends Activity {
     }
 
 
-    private static PermissionListener mPermissionListener;
 }
