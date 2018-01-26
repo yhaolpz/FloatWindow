@@ -46,7 +46,7 @@ public class FloatActivity extends Activity {
             if (PermissionUtil.hasPermissionOnActivityResult(this)) {
                 mPermissionListener.onSuccess();
             } else {
-                mPermissionListener.onSuccess();
+                mPermissionListener.onFail();
             }
         }
         finish();
