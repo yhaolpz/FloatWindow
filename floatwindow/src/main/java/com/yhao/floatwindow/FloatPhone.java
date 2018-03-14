@@ -19,6 +19,7 @@ class FloatPhone extends FloatView {
     private final WindowManager.LayoutParams mLayoutParams;
     private View mView;
     private int mX, mY;
+    private boolean isRemove = false;
 
     FloatPhone(Context applicationContext) {
         mContext = applicationContext;
@@ -100,11 +101,13 @@ class FloatPhone extends FloatView {
 
     @Override
     public void dismiss() {
+        isRemove = true;
         mWindowManager.removeView(mView);
     }
 
     @Override
     public void updateXY(int x, int y) {
+        if(isRemove)return;
         mLayoutParams.x = mX = x;
         mLayoutParams.y = mY = y;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
@@ -112,6 +115,7 @@ class FloatPhone extends FloatView {
 
     @Override
     void updateX(int x) {
+        if(isRemove)return;
         mLayoutParams.x = mX = x;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
 
@@ -119,6 +123,7 @@ class FloatPhone extends FloatView {
 
     @Override
     void updateY(int y) {
+        if(isRemove)return;
         mLayoutParams.y = mY = y;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
     }
