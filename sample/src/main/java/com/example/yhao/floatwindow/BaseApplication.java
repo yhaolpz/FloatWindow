@@ -2,6 +2,8 @@ package com.example.yhao.floatwindow;
 
 import android.app.Application;
 import android.os.Build;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -10,6 +12,7 @@ import com.example.yhao.fixedfloatwindow.R;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.MoveType;
 import com.yhao.floatwindow.Screen;
+import com.yhao.floatwindow.ViewStateListener;
 
 /**
  * Created by yhao on 2017/12/18.
@@ -18,6 +21,46 @@ import com.yhao.floatwindow.Screen;
 
 public class BaseApplication extends Application {
 
+
+    private static final String TAG = "FloatWindow";
+
+    private ViewStateListener mViewStateListener = new ViewStateListener() {
+        @Override
+        public void onPositionUpdate(int x, int y) {
+            Log.d(TAG, "onPositionUpdate: x=" + x + " y=" + y);
+        }
+
+        @Override
+        public void onShow() {
+            Log.d(TAG, "onShow");
+        }
+
+        @Override
+        public void onHide() {
+            Log.d(TAG, "onHide");
+        }
+
+        @Override
+        public void onDismiss() {
+            Log.d(TAG, "onDismiss");
+        }
+
+        @Override
+        public void onMoveAnimStart() {
+            Log.d(TAG, "onMoveAnimStart");
+        }
+
+        @Override
+        public void onMoveAnimEnd() {
+            Log.d(TAG, "onMoveAnimEnd");
+        }
+
+        @Override
+        public void onBackToDesktop() {
+            Log.d(TAG, "onBackToDesktop");
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,34 +68,27 @@ public class BaseApplication extends Application {
         ImageView imageView = new ImageView(getApplicationContext());
         imageView.setImageResource(R.drawable.icon);
 
-
         //效果图1
         FloatWindow
                 .with(getApplicationContext())
                 .setView(imageView)
-                .setWidth(Screen.width,0.2f)
-                .setHeight(Screen.width,0.2f)
-                .setX(Screen.width,0.8f)
-                .setY(Screen.height,0.3f)
-                .setMoveType(MoveType.slide)
-                .setMoveStyle(500,new BounceInterpolator())
+                .setWidth(Screen.width, 0.2f)
+                .setHeight(Screen.width, 0.2f)
+                .setX(Screen.width, 0.8f)
+                .setY(Screen.height, 0.3f)
+                .setMoveType(MoveType.slide,100,-100)
+                .setMoveStyle(500, new BounceInterpolator())
+                .setFilter(true, A_Activity.class, C_Activity.class)
+                .setViewStateListener(mViewStateListener)
                 .setDesktopShow(true)
                 .build();
 
-        ImageView imageView2 = new ImageView(getApplicationContext());
-        imageView2.setImageResource(R.mipmap.ic_launcher_round);
 
-//      效果图2
-        FloatWindow
-                .with(getApplicationContext())
-                .setView(imageView2)
-                .setWidth(Screen.width,0.2f)
-                .setHeight(Screen.width,0.2f)
-                .setX(Screen.width,0.7f)
-                .setY(Screen.height,0.02f)
-                .setTag("second")
-                .setMoveType(MoveType.inactive)
-                .setFilter(true,B_Activity.class,C_Activity.class)
-                .build();
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(BaseApplication.this, "onClick", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

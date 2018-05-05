@@ -66,10 +66,14 @@ public class FloatWindow {
         boolean mShow = true;
         Class[] mActivities;
         int mMoveType = MoveType.slide;
+        int mSlideLeftMargin;
+        int mSlideRightMargin;
         long mDuration = 300;
         TimeInterpolator mInterpolator;
         private String mTag = mDefaultTag;
-         boolean mDesktopShow;
+        boolean mDesktopShow;
+        PermissionListener mPermissionListener;
+        ViewStateListener mViewStateListener;
 
         private B() {
 
@@ -152,9 +156,22 @@ public class FloatWindow {
             return this;
         }
 
-
         public B setMoveType(@MoveType.MOVE_TYPE int moveType) {
+            return setMoveType(moveType, 0, 0);
+        }
+
+
+        /**
+         * 设置带边距的贴边动画，只有 moveType 为 MoveType.slide，设置边距才有意义，这个方法不标准，后面调整
+         *
+         * @param moveType         贴边动画 MoveType.slide
+         * @param slideLeftMargin  贴边动画左边距，默认为 0
+         * @param slideRightMargin 贴边动画右边距，默认为 0
+         */
+        public B setMoveType(@MoveType.MOVE_TYPE int moveType, int slideLeftMargin, int slideRightMargin) {
             mMoveType = moveType;
+            mSlideLeftMargin = slideLeftMargin;
+            mSlideRightMargin = slideRightMargin;
             return this;
         }
 
@@ -171,6 +188,16 @@ public class FloatWindow {
 
         public B setDesktopShow(boolean show) {
             mDesktopShow = show;
+            return this;
+        }
+
+        public B setPermissionListener(PermissionListener listener) {
+            mPermissionListener = listener;
+            return this;
+        }
+
+        public B setViewStateListener(ViewStateListener listener) {
+            mViewStateListener = listener;
             return this;
         }
 

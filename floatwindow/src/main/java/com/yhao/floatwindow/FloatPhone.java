@@ -20,13 +20,17 @@ class FloatPhone extends FloatView {
     private View mView;
     private int mX, mY;
     private boolean isRemove = false;
+    private PermissionListener mPermissionListener;
 
-    FloatPhone(Context applicationContext) {
+    FloatPhone(Context applicationContext, PermissionListener permissionListener) {
         mContext = applicationContext;
+        mPermissionListener = permissionListener;
         mWindowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
         mLayoutParams = new WindowManager.LayoutParams();
         mLayoutParams.format = PixelFormat.RGBA_8888;
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
         mLayoutParams.windowAnimations = 0;
     }
 
@@ -62,10 +66,16 @@ class FloatPhone extends FloatView {
                     @Override
                     public void onSuccess() {
                         mWindowManager.addView(mView, mLayoutParams);
+                        if (mPermissionListener != null) {
+                            mPermissionListener.onSuccess();
+                        }
                     }
 
                     @Override
                     public void onFail() {
+                        if (mPermissionListener != null) {
+                            mPermissionListener.onFail();
+                        }
                     }
                 });
             }
@@ -91,10 +101,16 @@ class FloatPhone extends FloatView {
             @Override
             public void onSuccess() {
                 mWindowManager.addView(mView, mLayoutParams);
+                if (mPermissionListener != null) {
+                    mPermissionListener.onSuccess();
+                }
             }
 
             @Override
             public void onFail() {
+                if (mPermissionListener != null) {
+                    mPermissionListener.onFail();
+                }
             }
         });
     }
@@ -107,7 +123,7 @@ class FloatPhone extends FloatView {
 
     @Override
     public void updateXY(int x, int y) {
-        if(isRemove)return;
+        if (isRemove) return;
         mLayoutParams.x = mX = x;
         mLayoutParams.y = mY = y;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
@@ -115,15 +131,14 @@ class FloatPhone extends FloatView {
 
     @Override
     void updateX(int x) {
-        if(isRemove)return;
+        if (isRemove) return;
         mLayoutParams.x = mX = x;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
-
     }
 
     @Override
     void updateY(int y) {
-        if(isRemove)return;
+        if (isRemove) return;
         mLayoutParams.y = mY = y;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
     }

@@ -19,7 +19,9 @@
 
 6.位置及宽高可设置百分比值，轻松适配各分辨率
 
-7.链式调用，简洁清爽
+7.支持权限申请结果、位置等状态监听
+
+8.链式调用，简洁清爽
 
 
 集成：
@@ -39,7 +41,7 @@
 
 ```
 	dependencies {
-	        compile 'com.github.yhaolpz:FloatWindow:1.0.8'
+	        compile 'com.github.yhaolpz:FloatWindow:1.0.9'
 	}
 ```
 
@@ -235,6 +237,15 @@ MoveType.inactive    : 不可拖动
 **更新日志**
 --
 
+**v1.0.9**
+
+ 修复拖动点击事件冲突
+
+ 添加权限结果监听、位置等状态监听
+
+ 支持贴边边距设置
+
+
 **v1.0.8**
 
  适配 4.4~8.0 及各大国产机型
@@ -270,7 +281,6 @@ MoveType.inactive    : 不可拖动
  FixedFloatWindow 类改为 FFWindow
 
 
-
 **v1.0.3**
 
  修复已知 bug
@@ -278,6 +288,8 @@ MoveType.inactive    : 不可拖动
  新增 dismiss 方法
 
  新增其他方案，如:所有版本都申请权限
+
+
 
 
 
