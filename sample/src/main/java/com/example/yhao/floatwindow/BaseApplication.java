@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.yhao.fixedfloatwindow.R;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.PermissionListener;
 import com.yhao.floatwindow.Screen;
 import com.yhao.floatwindow.ViewStateListener;
 
@@ -23,6 +24,17 @@ public class BaseApplication extends Application {
 
 
     private static final String TAG = "FloatWindow";
+    private PermissionListener mPermissionListener = new PermissionListener() {
+        @Override
+        public void onSuccess() {
+            Log.d(TAG, "onSuccess");
+        }
+
+        @Override
+        public void onFail() {
+            Log.d(TAG, "onFail");
+        }
+    };
 
     private ViewStateListener mViewStateListener = new ViewStateListener() {
         @Override
@@ -72,7 +84,7 @@ public class BaseApplication extends Application {
         FloatWindow
                 .with(getApplicationContext())
                 .setView(imageView)
-                .setWidth(Screen.width, 0.2f)
+                .setWidth(Screen.width, 0.2f) //设置悬浮控件宽高
                 .setHeight(Screen.width, 0.2f)
                 .setX(Screen.width, 0.8f)
                 .setY(Screen.height, 0.3f)
@@ -80,8 +92,11 @@ public class BaseApplication extends Application {
                 .setMoveStyle(500, new BounceInterpolator())
                 .setFilter(true, A_Activity.class, C_Activity.class)
                 .setViewStateListener(mViewStateListener)
+                .setPermissionListener(mPermissionListener)
                 .setDesktopShow(true)
                 .build();
+
+        FloatWindow.get().isShowing();
 
 
         imageView.setOnClickListener(new View.OnClickListener() {

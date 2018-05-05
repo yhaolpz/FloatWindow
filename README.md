@@ -56,43 +56,31 @@
 
 ```
 
-**1.创建悬浮控件**
+
+**1.基础使用**
 
 ```java
         FloatWindow
               .with(getApplicationContext())
               .setView(view)
+              .setWidth(100)                               //设置控件宽高
+              .setHeight(Screen.width,0.2f)
+              .setX(100)                                   //设置控件初始位置
+              .setY(Screen.height,0.3f)
+              .setDesktopShow(true)                        //桌面显示
+              .setViewStateListener(mViewStateListener)    //监听悬浮控件状态改变
+              .setPermissionListener(mPermissionListener)  //监听权限申请结果
               .build();
 
 ```
 
-setView 方法可设置 View 子类或 xml 布局。
-
-**2.设置宽高及显示位置**
-
-```java
-        FloatWindow
-              .with(getApplicationContext())
-              .setView(view)
-              .setWidth(100)                   //100px
-              .setHeight(Screen.width,0.2f)    //屏幕宽度的 20%
-              .setX(100)                       //100px
-              .setY(Screen.height,0.3f)        //屏幕高度的 30%
-              .build();
-
-```
-
-可设置具体数值或屏幕宽/高百分比，默认宽高为 wrap_content；默认位置为屏幕左上角，x、y 为偏移量。
+宽高及位置可设像素值或屏幕宽/高百分比，默认宽高为 wrap_content；默认位置为屏幕左上角，x、y 为偏移量。
 
 
-**3.指定界面显示**
+**2.指定界面显示**
 
 ```java
-        FloatWindow
-              .with(getApplicationContext())
-              .setView(view)
               .setFilter(true, A_Activity.class, C_Activity.class)
-              .build();
 
 ```
 此方法表示 A_Activity、C_Activity 显示悬浮窗，其他界面隐藏。
@@ -110,25 +98,12 @@ setView 方法可设置 View 子类或 xml 布局。
               .setFilter(true, BaseActivity.class)
 ```
 
-**4.桌面显示**
+
+**3.可拖动悬浮窗及回弹动画**
 
 ```java
-        FloatWindow
-              .with(getApplicationContext())
-              .setView(view)
-              .setDesktopShow(true)                //默认 false
-              .build();
-
-```
-
-**5.可拖动悬浮窗**
-
-```java
-        FloatWindow
-              .with(getApplicationContext())
-              .setView(view)
-              .setMoveType(MoveType.slide)         //可拖动，释放后自动贴边
-              .build();
+              .setMoveType(MoveType.slide)
+              .setMoveStyle(500, new AccelerateInterpolator())  //贴边动画时长为500ms，加速插值器
 
 ```
 
@@ -143,22 +118,10 @@ MoveType.active      : 可拖动
 MoveType.inactive    : 不可拖动
 
 
-**6.悬浮窗动画**
-
-```java
-        FloatWindow
-              .with(getApplicationContext())
-              .setView(view)
-              .setMoveType(MoveType.slide)
-              .setMoveStyle(500, new AccelerateInterpolator())  //贴边动画时长为500ms，加速插值器
-              .build();
-
-```
-
-自定义动画效果，只在 MoveType.slide 或 MoveType.back 模式下设置此项才有意义。默认减速插值器，默认动画时长为 300ms。
+setMoveStyle 方法可设置动画效果，只在 MoveType.slide 或 MoveType.back 模式下设置此项才有意义。默认减速插值器，默认动画时长为 300ms。
 
 
-**7.后续操作**
+**4.后续操作**
 
 ```java
         //手动控制
@@ -177,7 +140,7 @@ MoveType.inactive    : 不可拖动
 以上操作应待悬浮窗初始化后进行。
 
 
-**8.多个悬浮窗**
+**5.多个悬浮窗**
 
 ```java
 
@@ -202,30 +165,10 @@ MoveType.inactive    : 不可拖动
 创建第一个悬浮窗不需加 tag，之后再创建就需指定唯一 tag ，以此区分，方便进行后续操作。
 
 
-举个栗子：
+举个栗子
 ===
 
-![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/back.gif)
-
-此效果实现全部代码为下：
-
-```java
-
-        FloatWindow
-                .with(getApplicationContext())
-                .setView(imageView)
-                .setWidth(Screen.width,0.2f)
-                .setHeight(Screen.width,0.2f)
-                .setX(Screen.width,0.7f)
-                .setY(Screen.height,0.2f)
-                .setMoveType(MoveType.back)
-                .setMoveStyle(300,null)
-                .setFilter(true,A_Activity.class,C_Activity.class)
-                .build();
-
-```
-
-在 [sample](https://github.com/yhaolpz/FloatWindow/blob/master/sample/src/main/java/com/example/yhao/floatwindow/BaseApplication.java) 中也有示例代码。
+点击查看 : [示例代码](https://github.com/yhaolpz/FloatWindow/blob/master/sample/src/main/java/com/example/yhao/floatwindow/BaseApplication.java) 。
 
 最后：
 --
