@@ -1,7 +1,6 @@
 package com.example.yhao.floatwindow;
 
 import android.app.Application;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
@@ -25,33 +24,39 @@ public class BaseApplication extends Application {
 
     private static final String TAG = "FloatWindow";
 
+
+    FloatWindow.B floatWindow;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         ImageView imageView = new ImageView(getApplicationContext());
         imageView.setImageResource(R.drawable.icon);
-
-        FloatWindow
+        floatWindow = FloatWindow
                 .with(getApplicationContext())
                 .setView(imageView)
                 .setWidth(Screen.width, 0.2f) //设置悬浮控件宽高
                 .setHeight(Screen.width, 0.2f)
                 .setX(Screen.width, 0.8f)
                 .setY(Screen.height, 0.3f)
-                .setMoveType(MoveType.slide,100,-100)
+                .setMoveType(MoveType.slide, 100, -100)
                 .setMoveStyle(500, new BounceInterpolator())
                 .setFilter(true, A_Activity.class, C_Activity.class)
                 .setViewStateListener(mViewStateListener)
                 .setPermissionListener(mPermissionListener)
-                .setDesktopShow(true)
-                .build();
+                .setDesktopShow(true);
+
+        floatWindow.build();
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(BaseApplication.this, "onClick", Toast.LENGTH_SHORT).show();
+//                FloatWindow.get().hide();
+//                FloatWindow.get().
+
             }
         });
     }
@@ -104,4 +109,7 @@ public class BaseApplication extends Application {
             Log.d(TAG, "onBackToDesktop");
         }
     };
+
+    public static void show() {
+    }
 }

@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yhao.fixedfloatwindow.com.example.yhao.floatwindow.B_Activity"
-    android:orientation="vertical"
     android:gravity="center"
-    >
+    android:orientation="vertical"
+    tools:context="com.example.yhao.fixedfloatwindow.com.example.yhao.floatwindow.B_Activity">
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="打开 C 界面"
         android:onClick="change"
-        />
+        android:text="打开 C 界面" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="返回"
+        android:onClick="show"
+        android:text="打开 C 界面" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="back"
-        />
+        android:text="返回" />
 
 </LinearLayout>
