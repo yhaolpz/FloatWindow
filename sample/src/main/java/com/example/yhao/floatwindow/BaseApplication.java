@@ -1,11 +1,12 @@
 package com.example.yhao.floatwindow;
 
 import android.app.Application;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.yhao.fixedfloatwindow.R;
 import com.yhao.floatwindow.FloatWindow;
@@ -32,7 +33,12 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         ImageView imageView = new ImageView(getApplicationContext());
-        imageView.setImageResource(R.drawable.icon);
+        imageView.setImageResource(R.drawable.hooli_service);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getDrawable();
+
+        animationDrawable.start();
+
         floatWindow = FloatWindow
                 .with(getApplicationContext())
                 .setView(imageView)
@@ -53,10 +59,13 @@ public class BaseApplication extends Application {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BaseApplication.this, "onClick", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BaseApplication.this, "onClick", Toast.LENGTH_SHORT).show();
 //                FloatWindow.get().hide();
 //                FloatWindow.get().
-
+//                this.startActivity(new Intent(this, B_Activity.class));
+                Intent intent = new Intent(BaseApplication.this, B_Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                BaseApplication.this.startActivity(intent);
             }
         });
     }
