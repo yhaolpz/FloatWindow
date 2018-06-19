@@ -220,22 +220,52 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 mClick = (Math.abs(upX - downX) > mSlop) || (Math.abs(upY - downY) > mSlop);
                                 switch (mB.mMoveType) {
                                     case MoveType.slide:
+//                                        int startX = mFloatView.getX();
+//                                        int endX = (startX * 2 + v.getWidth() > Util.getScreenWidth(mB.mApplicationContext)) ?
+//                                                Util.getScreenWidth(mB.mApplicationContext) - v.getWidth() - mB.mSlideRightMargin :
+//                                                mB.mSlideLeftMargin;
+//                                        mAnimator = ObjectAnimator.ofInt(startX, endX);
+//                                        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                                            @Override
+//                                            public void onAnimationUpdate(ValueAnimator animation) {
+//                                                int x = (int) animation.getAnimatedValue();
+//                                                mFloatView.updateX(x);
+//                                                if (mB.mViewStateListener != null) {
+//                                                    mB.mViewStateListener.onPositionUpdate(x, (int) upY);
+//                                                }
+//                                            }
+//                                        });
+//                                        startAnimator();
+
                                         int startX = mFloatView.getX();
                                         int endX = (startX * 2 + v.getWidth() > Util.getScreenWidth(mB.mApplicationContext)) ?
                                                 Util.getScreenWidth(mB.mApplicationContext) - v.getWidth() - mB.mSlideRightMargin :
                                                 mB.mSlideLeftMargin;
-                                        mAnimator = ObjectAnimator.ofInt(startX, endX);
+
+                                        int startY = mFloatView.getY();
+                                        int endY = startY;
+                                        if (startY < 20) {
+                                            endY = 20;
+                                        } else if (startY > Util.getScreenHeight(mB.mApplicationContext) - v.getHeight()) {
+                                            endY = Util.getScreenHeight(mB.mApplicationContext) - v.getHeight() - 20;
+                                        }
+
+                                        PropertyValuesHolder pvhX1 = PropertyValuesHolder.ofInt("x", mFloatView.getX(), endX);
+                                        PropertyValuesHolder pvhY1 = PropertyValuesHolder.ofInt("y", mFloatView.getY(), endY);
+                                        mAnimator = ObjectAnimator.ofPropertyValuesHolder(pvhX1, pvhY1);
                                         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                             @Override
                                             public void onAnimationUpdate(ValueAnimator animation) {
-                                                int x = (int) animation.getAnimatedValue();
-                                                mFloatView.updateX(x);
+                                                int x = (int) animation.getAnimatedValue("x");
+                                                int y = (int) animation.getAnimatedValue("y");
+                                                mFloatView.updateXY(x, y);
                                                 if (mB.mViewStateListener != null) {
-                                                    mB.mViewStateListener.onPositionUpdate(x, (int) upY);
+                                                    mB.mViewStateListener.onPositionUpdate(x, y);
                                                 }
                                             }
                                         });
                                         startAnimator();
+
                                         break;
                                     case MoveType.back:
                                         PropertyValuesHolder pvhX = PropertyValuesHolder.ofInt("x", mFloatView.getX(), mB.xOffset);
