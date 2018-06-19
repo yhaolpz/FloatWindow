@@ -2,7 +2,7 @@
 
 # FloatWindow 安卓任意界面悬浮窗
 # 此项目基于王英豪的FloatWindow 1.0.9版本
-## 原链接地址[](https://github.com/yhaolpz/FloatWindow)
+## 原链接地址[![](https://github.com/yhaolpz/FloatWindow)](https://github.com/yhaolpz/FloatWindow)
 
 [![](https://jitpack.io/v/yhaolpz/FloatWindow.svg)](https://jitpack.io/#yhaolpz/FloatWindow)
 
