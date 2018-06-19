@@ -23,4 +23,8 @@ public class B_Activity extends BaseActivity {
     public void back(View view) {
         finish();
     }
+
+    public void show(View view) {
+        BaseApplication.show();
+    }
 }
