@@ -3,8 +3,8 @@
 # FloatWindow 安卓任意界面悬浮窗
 # 此项目基于王英豪的FloatWindow 1.0.9版本
 ## 原链接地址[![](https://github.com/yhaolpz/FloatWindow)](https://github.com/yhaolpz/FloatWindow)
-
-集成：
+### https://github.com/yhaolpz/FloatWindow
+## 集成：
 ===
 
 第 1 步、在工程的 build.gradle 中添加：
@@ -25,7 +25,7 @@
 	}
 ```
 
-使用：
+## 使用：
 ===
 
 **0.声明权限**
