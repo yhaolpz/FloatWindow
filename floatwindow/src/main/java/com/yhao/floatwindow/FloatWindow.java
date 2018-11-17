@@ -51,7 +51,22 @@ public class FloatWindow {
             return;
         }
         mFloatWindowMap.get(tag).dismiss();
+        mFloatWindowMap.get(tag).destory();
         mFloatWindowMap.remove(tag);
+    }
+    
+    public static void destroyAll() {
+        if (mFloatWindowMap == null) return;
+        for (IFloatWindow iFloatWindow : mFloatWindowMap.values()) {
+            try {
+                iFloatWindow.dismiss();
+                iFloatWindow.destory();
+                mFloatWindowMap.remove(iFloatWindow);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        mFloatWindowMap = null;
     }
 
     public static class B {
