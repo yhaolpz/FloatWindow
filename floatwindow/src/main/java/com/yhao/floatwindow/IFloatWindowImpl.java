@@ -77,6 +77,12 @@ public class IFloatWindowImpl extends IFloatWindow {
             }
         });
     }
+    
+    @Override
+    public void destory() {
+        if (mFloatLifecycle == null) return;
+        mFloatLifecycle.unRegisterReceiver(mB.mApplicationContext);
+    }
 
     @Override
     public void show() {
