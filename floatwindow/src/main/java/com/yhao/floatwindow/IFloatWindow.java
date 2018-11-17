@@ -29,4 +29,6 @@ public abstract class IFloatWindow {
     public abstract View getView();
 
     abstract void dismiss();
+
+    public abstract void destory();
 }
