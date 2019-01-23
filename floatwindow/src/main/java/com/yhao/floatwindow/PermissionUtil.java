@@ -28,7 +28,7 @@ class PermissionUtil {
     }
 
     static boolean hasPermissionOnActivityResult(Context context) {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return hasPermissionForO(context);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
