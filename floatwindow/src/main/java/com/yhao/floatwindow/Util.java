@@ -46,6 +46,16 @@ class Util {
         return sPoint.y;
     }
 
+    static int getStatusBarHeight(Context context) {
+        int height = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            height = context.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return height;
+    }
+
     static boolean isViewVisible(View view) {
         return view.getGlobalVisibleRect(new Rect());
     }
