@@ -179,7 +179,14 @@ setMoveStyle 方法可设置动画效果，只在 MoveType.slide 或 MoveType.ba
 
 **更新日志**
 --
+**v1.0.10**
 
+ 分离生命周期和创建浮动框，需要在Application中注册生命周期。
+ 这样就可以在用到浮动框的地方才去创建浮动框。
+ 解决必须在Application中创建浮动框，否则会出问题的bug。
+ 
+ 在Applicaion中先注册生命周期：FloatWindow.initLifecycle(this);
+ 
 **v1.0.9**
 
  修复拖动点击事件冲突
