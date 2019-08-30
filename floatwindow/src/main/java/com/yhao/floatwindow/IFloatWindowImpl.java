@@ -97,6 +97,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         if (mB.mViewStateListener != null) {
             mB.mViewStateListener.onDismiss();
         }
+        FloatLifecycle.unregister(this);
     }
 
     @Override
