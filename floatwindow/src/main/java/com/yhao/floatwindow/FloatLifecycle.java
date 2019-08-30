@@ -40,6 +40,10 @@ public class FloatLifecycle extends BroadcastReceiver implements Application.Act
     public static void register(IFloatWindowImpl floatWindow){
         set.add(floatWindow);
     }
+    
+    public static void unregister(IFloatWindowImpl floatWindow){
+        set.remove(floatWindow);
+    }
 
     public FloatLifecycle(Context applicationContext) {
         num++;
