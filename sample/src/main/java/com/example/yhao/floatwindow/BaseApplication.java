@@ -32,6 +32,8 @@ public class BaseApplication extends Application {
         ImageView imageView = new ImageView(getApplicationContext());
         imageView.setImageResource(R.drawable.icon);
 
+        // 分离生命周期和创建浮动框
+        FloatWindow.initLifecycle(this);
         FloatWindow
                 .with(getApplicationContext())
                 .setView(imageView)

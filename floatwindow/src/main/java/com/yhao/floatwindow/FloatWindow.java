@@ -1,6 +1,7 @@
 package com.yhao.floatwindow;
 
 import android.animation.TimeInterpolator;
+import android.app.Application;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.MainThread;
@@ -16,9 +17,17 @@ import java.util.Map;
 /**
  * Created by yhao on 2017/12/22.
  * https://github.com/yhaolpz
+ *
+ * modify by bond on 2019-08-29 分离生命周期注册和浮动框创建逻辑。这样就可以在用到浮动框的地方才去创建浮动框。
+ * 解决必须在Application中创建浮动框，否则会出问题的bug.
  */
 
 public class FloatWindow {
+    static FloatLifecycle floatLifecycle;
+
+    public static void initLifecycle(Application application){
+        floatLifecycle = new FloatLifecycle(application);
+    }
 
     private FloatWindow() {
 

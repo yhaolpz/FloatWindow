@@ -7,6 +7,7 @@ import android.animation.PropertyValuesHolder;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,11 +20,8 @@ import android.view.animation.DecelerateInterpolator;
  */
 
 public class IFloatWindowImpl extends IFloatWindow {
-
-
     private FloatWindow.B mB;
     private FloatView mFloatView;
-    private FloatLifecycle mFloatLifecycle;
     private boolean isShow;
     private boolean once = true;
     private ValueAnimator mAnimator;
@@ -34,7 +32,6 @@ public class IFloatWindowImpl extends IFloatWindow {
     private float upY;
     private boolean mClick = false;
     private int mSlop;
-
 
     private IFloatWindowImpl() {
 
@@ -55,27 +52,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(mB.mWidth, mB.mHeight);
         mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
         mFloatView.setView(mB.mView);
-        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
-            @Override
-            public void onShow() {
-                show();
-            }
-
-            @Override
-            public void onHide() {
-                hide();
-            }
-
-            @Override
-            public void onBackToDesktop() {
-                if (!mB.mDesktopShow) {
-                    hide();
-                }
-                if (mB.mViewStateListener != null) {
-                    mB.mViewStateListener.onBackToDesktop();
-                }
-            }
-        });
+        FloatLifecycle.register(this);
     }
 
     @Override
@@ -120,6 +97,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         if (mB.mViewStateListener != null) {
             mB.mViewStateListener.onDismiss();
         }
+        FloatLifecycle.unregister(this);
     }
 
     @Override
@@ -299,4 +277,24 @@ public class IFloatWindowImpl extends IFloatWindow {
         }
     }
 
+    public boolean needShow(Activity activity) {
+        if (mB.mActivities == null) {
+            return true;
+        }
+        for (Class a : mB.mActivities) {
+            if (a.isInstance(activity)) {
+                return mB.mShow;
+            }
+        }
+        return !mB.mShow;
+    }
+
+    public void onBackToDesktop() {
+        if (!mB.mDesktopShow) {
+            hide();
+        }
+        if (mB.mViewStateListener != null) {
+            mB.mViewStateListener.onBackToDesktop();
+        }
+    }
 }
