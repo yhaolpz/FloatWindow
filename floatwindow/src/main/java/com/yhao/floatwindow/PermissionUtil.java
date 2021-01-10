@@ -6,9 +6,10 @@ import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.WindowManager;
+
+import androidx.annotation.RequiresApi;
 
 import java.lang.reflect.Method;
 
