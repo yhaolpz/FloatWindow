@@ -176,6 +176,16 @@ setMoveStyle 方法可设置动画效果，只在 MoveType.slide 或 MoveType.ba
 
 本人已尽量去兼容更多机型，但经济有限，如果你想帮助此库，提 Issues 标出当前版本不适配的机型即可，感谢~
 
+### 新增功能
+1, setFlags (可修复悬浮窗 TextEdit 不可弹出输入法) 
+```java
+// 使悬浮窗获取焦点
+FloatWindow.get().updateFlags(WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR);
+
+// 使悬浮窗失去焦点
+FloatWindow.get().updateFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+
+```
 
 **更新日志**
 --
