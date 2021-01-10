@@ -26,6 +26,8 @@ public abstract class IFloatWindow {
 
     public abstract void updateY(@Screen.screenType int screenType,float ratio);
 
+    public abstract void updateFlags(int flags);
+
     public abstract View getView();
 
     abstract void dismiss();

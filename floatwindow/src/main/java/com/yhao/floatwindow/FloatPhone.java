@@ -52,6 +52,11 @@ class FloatPhone extends FloatView {
         mLayoutParams.y = mY = yOffset;
     }
 
+    @Override
+    void setFlags(int flags) {
+        super.setFlags(flags);
+        mLayoutParams.flags = flags;
+    }
 
     @Override
     public void init() {
@@ -140,6 +145,13 @@ class FloatPhone extends FloatView {
     void updateY(int y) {
         if (isRemove) return;
         mLayoutParams.y = mY = y;
+        mWindowManager.updateViewLayout(mView, mLayoutParams);
+    }
+
+    @Override
+    void updateFlags(int flags) {
+        if (isRemove) return;
+        mLayoutParams.flags = flags;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
     }
 

@@ -55,6 +55,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(mB.mWidth, mB.mHeight);
         mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
         mFloatView.setView(mB.mView);
+        mFloatView.setFlags(mB.mFlags);
         mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
             @Override
             public void onShow() {
@@ -110,6 +111,7 @@ public class IFloatWindowImpl extends IFloatWindow {
 
     @Override
     public boolean isShowing() {
+        if(mB == null) return false;
         return isShow;
     }
 
@@ -154,6 +156,11 @@ public class IFloatWindowImpl extends IFloatWindow {
                 Util.getScreenHeight(mB.mApplicationContext)) * ratio);
         mFloatView.updateY(mB.yOffset);
 
+    }
+
+    @Override
+    public void updateFlags(int flags) {
+        mFloatView.updateFlags(flags);
     }
 
     @Override
