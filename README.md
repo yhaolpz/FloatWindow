@@ -1,5 +1,5 @@
 # FloatWindow 安卓任意界面悬浮窗
-[![](https://jitpack.io/v/yhaolpz/FloatWindow.svg)](https://jitpack.io/#yhaolpz/FloatWindow)
+[![](https://jitpack.io/v/PBK-B/FloatWindow.svg)](https://jitpack.io/#PBK-B/FloatWindow)
 
 
 ![悬浮按钮图](https://raw.githubusercontent.com/yhaolpz/FixedFloatWindow/master/slide.gif)
@@ -41,7 +41,7 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.PBK-B:FloatWindow:Tag'
+	implementation 'com.github.PBK-B:FloatWindow:1.0.9'
 }
 ```
 
