@@ -30,19 +30,19 @@
 第 1 步、在工程的 build.gradle 中添加：
 
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 第 2 步、在应用的  build.gradle 中添加：
 
 ```
-	dependencies {
-	        compile 'com.github.yhaolpz:FloatWindow:1.0.9'
-	}
+dependencies {
+	implementation 'com.github.PBK-B:FloatWindow:Tag'
+}
 ```
 
 使用：
