@@ -28,6 +28,10 @@ abstract class FloatView {
     void updateY(int y) {
     }
 
+    void setFlags(int flags) {}
+
+    void updateFlags(int flags) {}
+
     int getX() {
         return 0;
     }

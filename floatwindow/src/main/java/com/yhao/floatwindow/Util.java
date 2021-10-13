@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;

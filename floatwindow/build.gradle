@@ -10,7 +10,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
 
@@ -25,14 +25,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     testCompile 'junit:junit:4.12'
 }
 
 // JitPack Maven
-apply plugin: 'com.github.dcendents.android-maven'
+// apply plugin: 'com.github.dcendents.android-maven'
 // Your Group
-group='com.github.yhaolpz'
+// group='com.github.yhaolpz'
